@@ -1,0 +1,209 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500;700&display=swap");
+
+:root {
+  --bg: #0b1220;
+  --surface-1: #12203a;
+  --surface-2: #1a2d4d;
+  --text: #e8eef7;
+  --text-muted: #8fa3c4;
+  --accent: #4fc3f7;
+  --accent-support: #ffb74d;
+  --success: #4caf50;
+  --danger: #ef5350;
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-6: 48px;
+  --radius: 4px;
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-ui: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(rgba(79, 195, 247, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(79, 195, 247, 0.06) 1px, transparent 1px);
+  background-size: 32px 32px;
+  color: var(--text);
+  font-family: var(--font-ui);
+  line-height: 1.5;
+}
+
+#app {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: var(--space-6) var(--space-2);
+}
+
+a {
+  color: var(--accent);
+}
+
+.page {
+  width: 100%;
+  max-width: 70ch;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 2rem;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.wordmark .caret {
+  color: var(--accent);
+}
+
+.tagline {
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.panel {
+  background: var(--surface-1);
+  border: 1px solid rgba(79, 195, 247, 0.15);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+input[type="text"] {
+  font-family: var(--font-ui);
+  font-size: 1.25rem;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid rgba(79, 195, 247, 0.25);
+  border-radius: var(--radius);
+  padding: var(--space-2);
+  transition: box-shadow 160ms ease-out, border-color 160ms ease-out;
+}
+
+input[type="text"]:focus-visible {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 16px rgba(79, 195, 247, 0.35);
+}
+
+.verdict {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  align-self: flex-start;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius);
+  border: 1px solid var(--text-muted);
+  background: var(--surface-2);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  transition: color 160ms ease-out, border-color 160ms ease-out;
+}
+
+.verdict[data-verdict="green"] {
+  color: var(--success);
+  border-color: var(--success);
+}
+
+.verdict[data-verdict="yellow"] {
+  color: var(--accent-support);
+  border-color: var(--accent-support);
+}
+
+.verdict[data-verdict="red"] {
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+.metrics {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.metric-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.metric-row .meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.bar-track {
+  height: 6px;
+  background: var(--bg);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: var(--radius);
+  transition: width 200ms ease-out;
+}
+
+.cta {
+  align-self: flex-start;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  background: transparent;
+  border-radius: var(--radius);
+  padding: var(--space-1) var(--space-2);
+  font-family: var(--font-ui);
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 160ms ease-out, color 160ms ease-out;
+}
+
+.cta:hover,
+.cta:focus-visible {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+@media (max-width: 480px) {
+  .wordmark {
+    font-size: 1.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 0.001ms !important;
+  }
+}
