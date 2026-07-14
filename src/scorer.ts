@@ -13,10 +13,29 @@ export interface MetricResult {
   detail: string;
 }
 
+export type Verdict = "checking" | "green" | "yellow" | "red";
+
 export interface ScoreResult {
   input: string;
   metrics: MetricResult[];
   overallScore: number;
+  verdict: Verdict;
+}
+
+// Relative weight of each metric in the overall suspicion score. Consonant
+// clustering and pronounceability are the strongest tells, so they carry
+// more weight than caps ratio (which real all-lowercase names can dodge).
+const METRIC_WEIGHTS: Record<string, number> = {
+  vowelDensity: 0.2,
+  consonantClustering: 0.3,
+  allCapsRatio: 0.2,
+  pronounceability: 0.3,
+};
+
+export function verdictFromScore(score: number): Verdict {
+  if (score >= 60) return "red";
+  if (score >= 30) return "yellow";
+  return "green";
 }
 
 const VOWELS = new Set(["a", "e", "i", "o", "u"]);
@@ -159,10 +178,18 @@ export function analyzeBrandName(raw: string): ScoreResult {
     scorePronounceability(input),
   ];
 
+  const hasLetters = letters(input).length > 0;
+  const overallScore = hasLetters
+    ? Math.round(
+        metrics.reduce((sum, m) => sum + m.score * (METRIC_WEIGHTS[m.key] ?? 0), 0),
+      )
+    : 0;
+
   return {
     input,
     metrics,
-    overallScore: 0,
+    overallScore,
+    verdict: hasLetters ? verdictFromScore(overallScore) : "checking",
   };
 }
 
