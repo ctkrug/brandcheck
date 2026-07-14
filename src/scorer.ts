@@ -84,11 +84,37 @@ export function scoreConsonantClustering(name: string): MetricResult {
   };
 }
 
+/**
+ * Ordinary brand names capitalize only their first letter ("Nike"). Fully
+ * or mostly capitalized strings ("KUAFYQ") are common among keyword-stuffed
+ * Amazon listings, so we score the uppercase ratio excluding the first
+ * character (a normal capitalized brand name would otherwise always trip
+ * this metric).
+ */
+export function scoreAllCapsRatio(name: string): MetricResult {
+  const alpha = name.split("").filter((ch) => /[a-zA-Z]/.test(ch));
+  const rest = alpha.slice(1);
+  const upperCount = rest.filter((ch) => ch === ch.toUpperCase() && /[A-Z]/.test(ch)).length;
+  const ratio = rest.length === 0 ? 0 : upperCount / rest.length;
+  const score = Math.round(ratio * 100);
+
+  return {
+    key: "allCapsRatio",
+    label: "All-caps ratio",
+    score,
+    detail:
+      score === 0
+        ? "standard capitalization"
+        : `${score}% of trailing letters are uppercase`,
+  };
+}
+
 export function analyzeBrandName(raw: string): ScoreResult {
   const input = normalizeInput(raw);
   const metrics: MetricResult[] = [
     scoreVowelDensity(input),
     scoreConsonantClustering(input),
+    scoreAllCapsRatio(input),
   ];
 
   return {
