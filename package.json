@@ -11,5 +11,11 @@
     "test": "vitest run",
     "lint": "eslint ."
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^7.0.2",
+    "vite": "^8.1.4",
+    "vitest": "^4.1.10",
+    "jsdom": "^29.1.1"
+  }
 }
