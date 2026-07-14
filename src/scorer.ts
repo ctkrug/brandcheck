@@ -54,9 +54,42 @@ export function scoreVowelDensity(name: string): MetricResult {
   };
 }
 
+/**
+ * The longest run of consecutive consonants is one of the sharpest tells:
+ * real English words rarely exceed a 3-consonant cluster ("strength"),
+ * while generated pseudo-brands frequently string together 4+ ("Vlkzor").
+ */
+export function scoreConsonantClustering(name: string): MetricResult {
+  const chars = letters(name);
+  let longest = 0;
+  let current = 0;
+  for (const ch of chars) {
+    if (VOWELS.has(ch)) {
+      current = 0;
+    } else {
+      current += 1;
+      longest = Math.max(longest, current);
+    }
+  }
+  const score = longest <= 2 ? 0 : longest === 3 ? 20 : Math.min(100, 20 + (longest - 3) * 30);
+
+  return {
+    key: "consonantClustering",
+    label: "Consonant clustering",
+    score,
+    detail:
+      longest <= 1
+        ? "no consecutive consonants"
+        : `longest consonant run: ${longest} letters`,
+  };
+}
+
 export function analyzeBrandName(raw: string): ScoreResult {
   const input = normalizeInput(raw);
-  const metrics: MetricResult[] = [scoreVowelDensity(input)];
+  const metrics: MetricResult[] = [
+    scoreVowelDensity(input),
+    scoreConsonantClustering(input),
+  ];
 
   return {
     input,
