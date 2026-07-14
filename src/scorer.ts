@@ -109,12 +109,54 @@ export function scoreAllCapsRatio(name: string): MetricResult {
   };
 }
 
+// Consonant-consonant bigrams that occur as legitimate onsets/codas/digraphs
+// in common English words. A consonant pair outside this set is a good
+// proxy for "hard to pronounce on the first try".
+const PRONOUNCEABLE_BIGRAMS = new Set([
+  "ch", "sh", "th", "ph", "wh", "gh", "ck", "ng", "nk", "st", "sp", "sk",
+  "nd", "nt", "mp", "ct", "pt", "ld", "lt", "rd", "rt", "ft", "xt", "mb",
+  "lm", "lp", "ls", "lf", "rk", "rm", "rn", "rp", "rs", "lk", "sm", "sn",
+  "sw", "tr", "dr", "br", "cr", "fr", "gr", "pr", "kr", "cl", "bl", "fl",
+  "gl", "pl", "sl", "tw", "dw", "qu", "wr", "kn", "gn", "ps", "pn", "mn",
+]);
+
+/**
+ * Flags consonant-consonant bigrams that don't match a known-pronounceable
+ * English onset/coda/digraph. A high hit rate means an English speaker is
+ * likely to stumble reading the name aloud.
+ */
+export function scorePronounceability(name: string): MetricResult {
+  const chars = letters(name);
+  let consonantPairs = 0;
+  let awkwardPairs = 0;
+  for (let i = 0; i < chars.length - 1; i += 1) {
+    const a = chars[i];
+    const b = chars[i + 1];
+    if (VOWELS.has(a) || VOWELS.has(b)) continue;
+    consonantPairs += 1;
+    if (!PRONOUNCEABLE_BIGRAMS.has(a + b)) awkwardPairs += 1;
+  }
+  const ratio = consonantPairs === 0 ? 0 : awkwardPairs / consonantPairs;
+  const score = Math.round(ratio * 100);
+
+  return {
+    key: "pronounceability",
+    label: "Pronounceability",
+    score,
+    detail:
+      consonantPairs === 0
+        ? "no consonant clusters to evaluate"
+        : `${awkwardPairs}/${consonantPairs} consonant pairs are awkward to say`,
+  };
+}
+
 export function analyzeBrandName(raw: string): ScoreResult {
   const input = normalizeInput(raw);
   const metrics: MetricResult[] = [
     scoreVowelDensity(input),
     scoreConsonantClustering(input),
     scoreAllCapsRatio(input),
+    scorePronounceability(input),
   ];
 
   return {
