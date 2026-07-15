@@ -21,7 +21,16 @@ function renderApp(root: HTMLElement): void {
       <section class="panel">
         <div>
           <label for="brand-input">Brand name</label>
-          <input id="brand-input" type="text" placeholder="e.g. KUAFYQ" autocomplete="off" />
+          <div class="input-wrap">
+            <div class="highlight-layer" id="highlight-layer" aria-hidden="true"></div>
+            <input
+              id="brand-input"
+              type="text"
+              placeholder="e.g. KUAFYQ"
+              autocomplete="off"
+              spellcheck="false"
+            />
+          </div>
         </div>
         <div class="verdict" id="verdict" data-verdict="checking" role="status">
           checking…
