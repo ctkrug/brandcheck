@@ -227,8 +227,13 @@ export function analyzeBrandName(raw: string): ScoreResult {
       )
     : 0;
 
+  // "checking" is reserved for truly empty input (nothing typed yet). Any
+  // non-empty input that lacks enough analyzable ASCII letters — too short,
+  // or a non-Latin script / emoji / digits this heuristic can't read — is
+  // "insufficient" instead, since there's no async step that would ever
+  // move it out of "checking".
   let verdict: Verdict = "checking";
-  if (hasLetters) {
+  if (input.length > 0) {
     verdict =
       letterCount < MIN_SIGNAL_LETTERS ? "insufficient" : verdictFromScore(overallScore);
   }
