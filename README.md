@@ -57,6 +57,7 @@ Core scope from [`docs/BACKLOG.md`](docs/BACKLOG.md) is complete. See
 npm install
 npm run dev      # local dev server
 npm test         # run the scorer test suite
+npm run lint     # eslint, same check CI runs
 npm run build    # production build into dist/
 ```
 
