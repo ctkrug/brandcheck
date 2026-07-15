@@ -61,6 +61,16 @@ describe("verdictFromScore", () => {
   it("maps high scores to red", () => {
     expect(verdictFromScore(85)).toBe("red");
   });
+
+  it("treats the yellow/green boundary as inclusive of yellow", () => {
+    expect(verdictFromScore(29)).toBe("green");
+    expect(verdictFromScore(30)).toBe("yellow");
+  });
+
+  it("treats the red/yellow boundary as inclusive of red", () => {
+    expect(verdictFromScore(59)).toBe("yellow");
+    expect(verdictFromScore(60)).toBe("red");
+  });
 });
 
 describe("classifyLetters", () => {
