@@ -27,6 +27,28 @@ const VERDICT_LABEL: Record<Verdict, string> = {
 
 const TESS_URL = "https://tmsearch.uspto.gov/search/search-information";
 
+// Matches the .verdict.flip transition duration in style.css.
+const VERDICT_FLIP_MS = 200;
+
+function createVerdictSetter(verdictEl: HTMLElement) {
+  // Matches the verdict baked into the initial markup, so a fresh page
+  // load with an empty input doesn't trigger a pointless flip.
+  let current: Verdict = "checking";
+  let pendingFlip: ReturnType<typeof setTimeout> | undefined;
+
+  return (next: Verdict) => {
+    if (next === current) return;
+    current = next;
+    clearTimeout(pendingFlip);
+    verdictEl.classList.add("flip");
+    pendingFlip = setTimeout(() => {
+      verdictEl.dataset.verdict = next;
+      verdictEl.textContent = VERDICT_LABEL[next];
+      verdictEl.classList.remove("flip");
+    }, VERDICT_FLIP_MS);
+  };
+}
+
 function renderApp(root: HTMLElement): void {
   root.innerHTML = `
     <div class="page">
@@ -72,14 +94,14 @@ function renderApp(root: HTMLElement): void {
   const verdictEl = root.querySelector<HTMLElement>("#verdict")!;
   const metricsEl = root.querySelector<HTMLUListElement>("#metrics")!;
   const tessLink = root.querySelector<HTMLAnchorElement>("#tess-link")!;
+  const setVerdict = createVerdictSetter(verdictEl);
 
   const update = () => {
     const result = analyzeBrandName(input.value);
 
     renderHighlightLayer(highlightLayer, input.value);
 
-    verdictEl.dataset.verdict = result.verdict;
-    verdictEl.textContent = VERDICT_LABEL[result.verdict];
+    setVerdict(result.verdict);
 
     metricsEl.innerHTML = result.metrics
       .map(
