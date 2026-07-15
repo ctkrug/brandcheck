@@ -2,6 +2,7 @@ import { analyzeBrandName, type Verdict } from "./scorer";
 
 const VERDICT_LABEL: Record<Verdict, string> = {
   checking: "checking…",
+  insufficient: "not enough signal",
   green: "low risk",
   yellow: "review",
   red: "likely pseudo-brand",

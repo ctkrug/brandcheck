@@ -13,7 +13,11 @@ export interface MetricResult {
   detail: string;
 }
 
-export type Verdict = "checking" | "green" | "yellow" | "red";
+export type Verdict = "checking" | "insufficient" | "green" | "yellow" | "red";
+
+// Below this many letters, the metrics don't have enough signal to be
+// meaningfully confident (e.g. a 2-letter clustering score is noise).
+const MIN_SIGNAL_LETTERS = 3;
 
 export interface ScoreResult {
   input: string;
@@ -215,18 +219,25 @@ export function analyzeBrandName(raw: string): ScoreResult {
     scorePronounceability(input),
   ];
 
-  const hasLetters = letters(input).length > 0;
+  const letterCount = letters(input).length;
+  const hasLetters = letterCount > 0;
   const overallScore = hasLetters
     ? Math.round(
         metrics.reduce((sum, m) => sum + m.score * (METRIC_WEIGHTS[m.key] ?? 0), 0),
       )
     : 0;
 
+  let verdict: Verdict = "checking";
+  if (hasLetters) {
+    verdict =
+      letterCount < MIN_SIGNAL_LETTERS ? "insufficient" : verdictFromScore(overallScore);
+  }
+
   return {
     input,
     metrics,
     overallScore,
-    verdict: hasLetters ? verdictFromScore(overallScore) : "checking",
+    verdict,
   };
 }
 
