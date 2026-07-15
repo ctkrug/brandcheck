@@ -1,5 +1,5 @@
 /**
- * BrandCheck heuristic scorer.
+ * Fauxmark heuristic scorer.
  *
  * Each metric returns a 0-100 "suspicion" score: higher means the string
  * looks more like an invented Amazon pseudo-brand, lower means it reads

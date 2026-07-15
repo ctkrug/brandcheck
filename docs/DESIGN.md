@@ -1,8 +1,8 @@
-# BrandCheck — Design Direction
+# Fauxmark — Design Direction
 
 ## Aesthetic direction
 
-**Blueprint / technical.** BrandCheck is an inspection tool — you're checking a
+**Blueprint / technical.** Fauxmark is an inspection tool — you're checking a
 name the way an engineer checks a drawing against spec. The page reads like a
 drafting sheet: deep navy "paper," cyan ink annotations, a faint grid,
 corner-bracket callouts pointing at the letters being measured. Nothing
@@ -53,7 +53,7 @@ A faint animated **blueprint grid** (1px lines, very low opacity, slow
 20s linear drift) fills the background, with a corner-bracket frame
 (`⌐...¬`-style drafting corners rendered in CSS) around the main panel — like
 the name is pinned to a technical drawing for inspection. The wordmark
-"BrandCheck" is set in Space Grotesk with a small cyan caret/cursor glyph
+"Fauxmark" is set in Space Grotesk with a small cyan caret/cursor glyph
 after it that blinks slowly, reinforcing "actively measuring."
 
 ## Juice plan (live-scoring feedback, not a game, but the interaction is the whole product)

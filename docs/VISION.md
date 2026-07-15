@@ -1,4 +1,4 @@
-# BrandCheck — Vision
+# Fauxmark — Vision
 
 ## The problem
 
@@ -31,7 +31,7 @@ the string itself, independent of the product or listing around it:
 - **Pronounceability** — consonant pairs that don't match any real English
   onset/coda/digraph are a strong "would stumble reading this aloud" signal.
 
-BrandCheck runs all four heuristics client-side, blends them into a single
+Fauxmark runs all four heuristics client-side, blends them into a single
 0-100 suspicion score, and shows the math — every metric visible, not a
 single opaque "flagged" badge. It never claims to *know* a name is
 unregistered; it always closes with a direct link to search the name on
@@ -50,7 +50,7 @@ USPTO TESS, because a heuristic score is a prompt to verify, not a verdict.
   function plus a UI, shippable as static files to any subpath host.
   See [`docs/DESIGN.md`](DESIGN.md) for the visual direction.
 - **A heuristic is a lead, not a ruling.** The USPTO TESS link is a
-  first-class element of every result, not a footnote — BrandCheck's job is
+  first-class element of every result, not a footnote — Fauxmark's job is
   to make you curious enough to check, not to replace the check.
 
 ## What "v1 done" looks like

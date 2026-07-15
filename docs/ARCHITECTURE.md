@@ -1,4 +1,4 @@
-# BrandCheck — Architecture
+# Fauxmark — Architecture
 
 A static, client-side-only TypeScript app. No backend, no build-time data,
 no name storage. Bundled by Vite; tested with Vitest.

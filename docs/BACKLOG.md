@@ -1,4 +1,4 @@
-# BrandCheck — Backlog
+# Fauxmark — Backlog
 
 Epics and stories for the build. Every story lists concrete, checkable
 acceptance criteria — no vibes. Story 1.1 is the wow moment and must land
