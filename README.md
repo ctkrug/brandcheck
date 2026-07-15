@@ -27,15 +27,16 @@ badge flips from *checking…* to a red / yellow / green call — transparently,
 with the scoring shown, not hidden behind a single opaque flag. A one-click
 link takes you to the USPTO TESS trademark search to actually verify the name.
 
-## Planned features
+## Features
 
-- [ ] Live, per-letter heuristic scoring (vowel density, consonant clusters,
+- [x] Live, per-letter heuristic scoring (vowel density, consonant clusters,
       caps ratio, pronounceability) combined into a single 0–100 signal score
-- [ ] Red / yellow / green verdict badge with the scoring breakdown visible
-- [ ] One-click link out to USPTO TESS trademark search for the typed name
-- [ ] Shareable/permalink-able result for a given name
-- [ ] A small library of known-real vs. known-invented names to sanity-check
-      the heuristic against
+- [x] Red / yellow / green verdict badge, cross-fading between states, with
+      the full scoring breakdown visible (each metric's plain-English detail)
+- [x] One-click link out to USPTO TESS trademark search for the typed name
+- [x] Shareable/permalink-able result for a given name (`#name=...`)
+- [x] A reference set of known-real vs. known-invented names to sanity-check
+      the heuristic against (`tests/fixtures/brandNames.ts`)
 
 ## Stack
 
@@ -46,8 +47,9 @@ link takes you to the USPTO TESS trademark search to actually verify the name.
 
 ## Status
 
-Early scaffold. See [`docs/VISION.md`](docs/VISION.md) for the full design
-rationale and [`docs/BACKLOG.md`](docs/BACKLOG.md) for the build plan.
+Core scope from [`docs/BACKLOG.md`](docs/BACKLOG.md) is complete. See
+[`docs/VISION.md`](docs/VISION.md) for the design rationale and
+[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for a map of the codebase.
 
 ## Development
 
