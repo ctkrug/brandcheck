@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   analyzeBrandName,
+  classifyLetters,
   scoreAllCapsRatio,
   scoreConsonantClustering,
   scorePronounceability,
@@ -59,6 +60,43 @@ describe("verdictFromScore", () => {
 
   it("maps high scores to red", () => {
     expect(verdictFromScore(85)).toBe("red");
+  });
+});
+
+describe("classifyLetters", () => {
+  it("classifies vowels and consonants for a normal word", () => {
+    expect(classifyLetters("Nike").map((l) => l.cls)).toEqual([
+      "consonant",
+      "vowel",
+      "consonant",
+      "vowel",
+    ]);
+  });
+
+  it("flags a run of 3+ consonants as cluster, not shorter runs", () => {
+    expect(classifyLetters("Vlkzor").map((l) => l.cls)).toEqual([
+      "cluster",
+      "cluster",
+      "cluster",
+      "cluster",
+      "vowel",
+      "consonant",
+    ]);
+  });
+
+  it("marks non-alphabetic characters as other and preserves them", () => {
+    const result = classifyLetters("K7!x");
+    expect(result.map((l) => l.char)).toEqual(["K", "7", "!", "x"]);
+    expect(result.map((l) => l.cls)).toEqual([
+      "consonant",
+      "other",
+      "other",
+      "consonant",
+    ]);
+  });
+
+  it("returns an empty array for empty input", () => {
+    expect(classifyLetters("")).toEqual([]);
   });
 });
 
