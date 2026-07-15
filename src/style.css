@@ -334,6 +334,9 @@ input[type="text"]:focus-visible {
 
 .cta {
   align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   border: 1px solid var(--accent);
   color: var(--accent);
   background: transparent;
