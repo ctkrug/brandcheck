@@ -110,6 +110,7 @@ a {
 }
 
 .panel {
+  position: relative;
   background: var(--surface-1);
   border: 1px solid rgba(79, 195, 247, 0.15);
   border-radius: var(--radius);
@@ -118,6 +119,43 @@ a {
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
+}
+
+/* Drafting-corner brackets, signature detail from docs/DESIGN.md — the
+   name reads as pinned to a technical drawing for inspection. */
+.corner {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+}
+
+.corner-tl {
+  top: -9px;
+  left: -9px;
+  border-top: 2px solid var(--accent);
+  border-left: 2px solid var(--accent);
+}
+
+.corner-tr {
+  top: -9px;
+  right: -9px;
+  border-top: 2px solid var(--accent);
+  border-right: 2px solid var(--accent);
+}
+
+.corner-bl {
+  bottom: -9px;
+  left: -9px;
+  border-bottom: 2px solid var(--accent);
+  border-left: 2px solid var(--accent);
+}
+
+.corner-br {
+  bottom: -9px;
+  right: -9px;
+  border-bottom: 2px solid var(--accent);
+  border-right: 2px solid var(--accent);
 }
 
 .input-row {
