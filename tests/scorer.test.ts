@@ -138,7 +138,7 @@ describe("analyzeBrandName", () => {
   });
 
   it("ignores non-alphabetic characters when counting letters for the threshold", () => {
-    expect(analyzeBrandName("7!7").verdict).toBe("checking");
+    expect(analyzeBrandName("7!7").verdict).toBe("insufficient");
     expect(analyzeBrandName("a7!").verdict).toBe("insufficient");
   });
 
@@ -146,5 +146,18 @@ describe("analyzeBrandName", () => {
     expect(() => analyzeBrandName("Nike99!")).not.toThrow();
     expect(() => analyzeBrandName("🔥Brand🔥")).not.toThrow();
     expect(() => analyzeBrandName("...---...")).not.toThrow();
+  });
+
+  it("never gets stuck on 'checking' once there is any non-empty input", () => {
+    // The scorer only recognizes ASCII a-z as letters, so non-Latin
+    // scripts, pure emoji, and pure digits/punctuation all have zero
+    // analyzable letters. With no async step to ever resolve a verdict,
+    // "checking" must be reserved for truly empty input only — otherwise
+    // the badge is stuck reading "checking..." forever.
+    expect(analyzeBrandName("מותג").verdict).toBe("insufficient");
+    expect(analyzeBrandName("北京烤鸭").verdict).toBe("insufficient");
+    expect(analyzeBrandName("🔥🔥🔥").verdict).toBe("insufficient");
+    expect(analyzeBrandName("123456").verdict).toBe("insufficient");
+    expect(analyzeBrandName("!!!???").verdict).toBe("insufficient");
   });
 });
