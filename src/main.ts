@@ -58,9 +58,11 @@ function createVerdictSetter(verdictEl: HTMLElement) {
 function renderApp(root: HTMLElement): void {
   root.innerHTML = `
     <div class="page">
-      <h1 class="wordmark">BrandCheck<span class="caret">_</span></h1>
+      <h1 class="wordmark">Fauxmark<span class="caret">_</span></h1>
       <p class="tagline">
-        Paste a brand name from an Amazon listing to see its pseudo-brand signal score.
+        Paste a brand name from an Amazon listing and find out if it reads like
+        a real company or a generated pseudo-brand, in about a second, before
+        you buy.
       </p>
       <section class="panel">
         <span class="corner corner-tl" aria-hidden="true"></span>
