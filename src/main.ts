@@ -35,21 +35,23 @@ function renderApp(root: HTMLElement): void {
         Paste a brand name from an Amazon listing to see its pseudo-brand signal score.
       </p>
       <section class="panel">
-        <div>
-          <label for="brand-input">Brand name</label>
-          <div class="input-wrap">
-            <div class="highlight-layer" id="highlight-layer" aria-hidden="true"></div>
-            <input
-              id="brand-input"
-              type="text"
-              placeholder="e.g. KUAFYQ"
-              autocomplete="off"
-              spellcheck="false"
-            />
+        <div class="input-row">
+          <div class="input-field">
+            <label for="brand-input">Brand name</label>
+            <div class="input-wrap">
+              <div class="highlight-layer" id="highlight-layer" aria-hidden="true"></div>
+              <input
+                id="brand-input"
+                type="text"
+                placeholder="e.g. KUAFYQ"
+                autocomplete="off"
+                spellcheck="false"
+              />
+            </div>
           </div>
-        </div>
-        <div class="verdict" id="verdict" data-verdict="checking" role="status">
-          checking…
+          <div class="verdict" id="verdict" data-verdict="checking" role="status">
+            checking…
+          </div>
         </div>
         <ul class="metrics" id="metrics"></ul>
         <a
